@@ -31,8 +31,6 @@ class RoundImageDrawable(resources: Resources, bitmap: Bitmap,var roundRadius: F
         val width = bitmap.width
         val height = bitmap.height
         val radius = (width / 2).coerceAtMost(height / 2)
-        val x = if (width > radius + radius) width / 2 else radius
-        val y = if (height > radius + radius) height / 2 else radius
         rectF.left = 0f
         rectF.top = 0f
         rectF.right = width.toFloat()
@@ -40,5 +38,4 @@ class RoundImageDrawable(resources: Resources, bitmap: Bitmap,var roundRadius: F
 
         canvas.drawRoundRect(rectF,roundRadius, roundRadius, mPaint)
     }
-
 }

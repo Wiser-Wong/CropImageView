@@ -1,5 +1,6 @@
 package com.wiser.crop
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -142,6 +143,7 @@ class CropImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(
      * 默认按宽度压缩，裁剪到控件高度
      */
     fun loadCropHeightImage(url: String?, cropHeight: Int = this.height, width: Int = this.width) {
+        if (context == null || ((context is Activity) && (context as? Activity)?.isFinishing == true)) return
         context?.apply {
             Glide.with(this).asBitmap().load(url).skipMemoryCache(false).diskCacheStrategy(
                 DiskCacheStrategy.ALL
@@ -204,6 +206,7 @@ class CropImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(
      * 默认按高度压缩，裁剪到控件宽度
      */
     fun loadCropWidthImage(url: String?, cropWidth: Int = this.width, height: Int = this.height) {
+        if (context == null || ((context is Activity) && (context as? Activity)?.isFinishing == true)) return
         context?.apply {
             Glide.with(this).asBitmap().load(url).skipMemoryCache(false).diskCacheStrategy(
                 DiskCacheStrategy.ALL

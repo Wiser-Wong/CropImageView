@@ -2,8 +2,10 @@
 <resources>
     <declare-styleable name="CropImageView">
         <attr name="civ_min_crop_distance" format="dimension|integer"/>
+        <attr name="civ_crop_distance" format="dimension|integer"/>
         <attr name="civ_shape_round_radius" format="dimension|float"/>
         <attr name="civ_error_default_pic_src" format="reference"/>
+        <attr name="civ_src" format="reference"/>
         <attr name="civ_gravity" format="enum">
             <enum name="top" value="1013"/>
             <enum name="centerY" value="1014"/>
@@ -13,9 +15,9 @@
             <enum name="end" value="1018"/>
         </attr>
         <attr name="civ_shape" format="enum">
-            <enum name="cir_circle" value="1010"/>
-            <enum name="cir_round" value="1011"/>
-            <enum name="cir_default" value="1012"/>
+            <enum name="civ_circle" value="1010"/>
+            <enum name="civ_round" value="1011"/>
+            <enum name="civ_default" value="1012"/>
         </attr>
     </declare-styleable>
 

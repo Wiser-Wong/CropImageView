@@ -3,8 +3,10 @@ package com.wiser.crop
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -28,6 +30,11 @@ class CropImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(
     private var minCropDistance: Int = 114
 
     /**
+     * 裁剪距离
+     */
+    private var cropDistance: Int = 0
+
+    /**
      * 加载图片展示类型
      */
     private var shapeType: Int = SHAPE_DEFAULT
@@ -43,6 +50,11 @@ class CropImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(
     private var errorDrawableId = -1
 
     /**
+     * 资源id
+     */
+    private var resourceId: Int = -1
+
+    /**
      * 裁剪比重
      */
     private var cropGravityType = CROP_GRAVITY_TOP
@@ -53,6 +65,10 @@ class CropImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(
             R.styleable.CropImageView_civ_min_crop_distance,
             minCropDistance.toFloat()
         ).toInt()
+        cropDistance = ta.getDimension(
+            R.styleable.CropImageView_civ_crop_distance,
+            cropDistance.toFloat()
+        ).toInt()
         shapeType = ta.getInt(R.styleable.CropImageView_civ_shape, shapeType)
         cropGravityType = ta.getInt(R.styleable.CropImageView_civ_gravity, cropGravityType)
         roundRadius = ta.getDimension(R.styleable.CropImageView_civ_shape_round_radius, roundRadius)
@@ -60,7 +76,16 @@ class CropImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(
             R.styleable.CropImageView_civ_error_default_pic_src,
             errorDrawableId
         )
+        resourceId = ta.getResourceId(R.styleable.CropImageView_civ_src,resourceId)
         ta.recycle()
+
+        if (resourceId != -1) {
+            if (cropGravityType == CROP_GRAVITY_TOP || cropGravityType == CROP_GRAVITY_CENTER_Y || cropGravityType == CROP_GRAVITY_BOTTOM) {
+                setCropHeightImageResource(resourceId,cropDistance,cropDistance)
+            } else {
+                setCropWidthImageResource(resourceId,cropDistance,cropDistance)
+            }
+        }
     }
 
     companion object {
@@ -133,6 +158,64 @@ class CropImageView(context: Context, attrs: AttributeSet) : AppCompatImageView(
     }
 
     fun getCropGravityType(): Int = cropGravityType
+
+    /**
+     * 加载裁剪高图片
+     * @param id 资源id
+     * @param cropHeight 裁剪高度
+     * @param width 图片宽度
+     *
+     * 默认按宽度压缩，裁剪到控件高度
+     */
+    fun setCropHeightImageResource(@IdRes id: Int,cropHeight: Int = this.height, width: Int = this.width) {
+        val resource = BitmapFactory.decodeResource(resources,id) ?: return
+        if ((width == 0 && this@CropImageView.width == 0) || cropHeight == 0 && this@CropImageView.height == 0) {
+            setImageBitmap(resource)
+        } else {
+            if (cropHeight > 0 && cropHeight < resource.height) {
+                val bitmap = compressWidthAndHeightForBitmap(
+                    resource,
+                    if (width == 0) this@CropImageView.width else width,
+                    if (cropHeight == 0) this@CropImageView.height else cropHeight
+                )
+                setImageCropHeightBitmap(
+                    bitmap,
+                    if (cropHeight > bitmap.height) bitmap.height else if (cropHeight > minCropDistance) cropHeight else minCropDistance
+                )
+            } else {
+                setImageBitmap(resource)
+            }
+        }
+    }
+
+    /**
+     * 加载裁剪高图片
+     * @param id 资源id
+     * @param cropWidth 裁剪宽度
+     * @param height 图片高度
+     *
+     * 默认按高度压缩，裁剪到控件宽度
+     */
+    fun setCropWidthImageResource(@IdRes id: Int,cropWidth: Int = this.width, height: Int = this.height) {
+        val resource = BitmapFactory.decodeResource(resources,id) ?: return
+        if ((height == 0 && this@CropImageView.height == 0) || cropWidth == 0 && this@CropImageView.width == 0) {
+            setImageBitmap(resource)
+        } else {
+            if (cropWidth > 0 && cropWidth < resource.width) {
+                val bitmap = compressWidthAndHeightForBitmap(
+                    resource,
+                    if (cropWidth == 0) this@CropImageView.width else cropWidth,
+                    if (height == 0) this@CropImageView.height else height
+                )
+                setImageCropWidthBitmap(
+                    bitmap,
+                    if (cropWidth > bitmap.width) bitmap.width else if (cropWidth > minCropDistance) cropWidth else minCropDistance
+                )
+            } else {
+                setImageBitmap(resource)
+            }
+        }
+    }
 
     /**
      * 加载裁剪高图片

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.wiser.crop.CropImageView
+            android:id="@+id/civ_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/black"
+            app:civ_error_default_pic_src="@mipmap/ic_launcher_round"
+            app:civ_shape_round_radius="20dp"
+            app:civ_min_crop_distance="30dp"
+            app:civ_gravity="top"
+            app:civ_shape="cir_round"/>
+
+        <com.wiser.crop.CropImageView
+            android:id="@+id/civ_photo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/black"
+            app:civ_error_default_pic_src="@mipmap/ic_launcher_round"
+            app:civ_shape_round_radius="20dp"
+            app:civ_min_crop_distance="30dp"
+            app:civ_gravity="centerY"
+            app:civ_shape="cir_circle"/>
+
+        <com.wiser.crop.CropImageView
+            android:id="@+id/civ_photo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/black"
+            app:civ_error_default_pic_src="@mipmap/ic_launcher_round"
+            app:civ_shape_round_radius="20dp"
+            app:civ_min_crop_distance="30dp"
+            app:civ_gravity="bottom"
+            app:civ_shape="cir_default"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.wiser.crop.CropImageView
+            android:id="@+id/civ_photo3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/black"
+            app:civ_error_default_pic_src="@mipmap/ic_launcher_round"
+            app:civ_shape_round_radius="20dp"
+            app:civ_min_crop_distance="30dp"
+            app:civ_gravity="start"
+            app:civ_shape="cir_round"/>
+
+        <com.wiser.crop.CropImageView
+            android:id="@+id/civ_photo4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/black"
+            app:civ_error_default_pic_src="@mipmap/ic_launcher_round"
+            app:civ_shape_round_radius="20dp"
+            app:civ_min_crop_distance="30dp"
+            app:civ_gravity="centerX"
+            app:civ_shape="cir_circle"/>
+
+        <com.wiser.crop.CropImageView
+            android:id="@+id/civ_photo5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/black"
+            app:civ_error_default_pic_src="@mipmap/ic_launcher_round"
+            app:civ_shape_round_radius="20dp"
+            app:civ_min_crop_distance="30dp"
+            app:civ_gravity="end"
+            app:civ_shape="cir_default"/>
+    </LinearLayout>
+
+
+</LinearLayout>

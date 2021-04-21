@@ -1,0 +1,3 @@
+include ':crop'
+include ':app'
+rootProject.name = "CropImageView"
